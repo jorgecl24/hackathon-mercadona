@@ -21,11 +21,8 @@ export function startTour() {
       img.src = '/mascot.png'
       img.alt = ''
       img.setAttribute('aria-hidden', 'true')
-      img.className = 'tour-mascot-inline'
-      popover.title.style.display = 'flex'
-      popover.title.style.alignItems = 'center'
-      popover.title.style.gap = '10px'
-      popover.title.insertBefore(img, popover.title.firstChild)
+      img.className = 'tour-mascot-corner'
+      popover.wrapper.appendChild(img)
     },
     steps: [
       {
