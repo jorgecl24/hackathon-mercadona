@@ -37,12 +37,15 @@ export function startTour(navigate: (page: PageId) => void) {
       img.className = 'tour-mascot-corner'
       document.body.appendChild(img)
 
-      // Position relative to the rendered popover (fixed in viewport)
-      requestAnimationFrame(() => {
-        const rect = popover.wrapper.getBoundingClientRect()
-        img.style.left = Math.max(0, rect.left - 30) + 'px'
-        img.style.top  = Math.max(0, rect.top  - 55) + 'px'
-      })
+      // Driver.js positions the popover after this callback fires.
+      // Two rAFs guarantee we read the final coordinates.
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          const rect = popover.wrapper.getBoundingClientRect()
+          img.style.left = Math.max(0, rect.left - 30) + 'px'
+          img.style.top  = Math.max(0, rect.top  - 55) + 'px'
+        })
+      )
     },
     steps: [
 
