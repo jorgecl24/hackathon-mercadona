@@ -6,6 +6,9 @@ import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { OrderProposalPage } from '@/pages/order/OrderProposalPage'
 import { PlaceholderPage } from '@/pages/PlaceholderPage'
+import { ForecastPage } from '@/pages/forecast/ForecastPage'
+import { SummaryPage } from '@/pages/summary/SummaryPage'
+import { WastePage } from '@/pages/waste/WastePage'
 import type { Horizon } from '@/types'
 
 export default function App() {
@@ -30,6 +33,12 @@ export default function App() {
           <main className="flex-1">
             {page === 'order' ? (
               <OrderProposalPage key={horizon} horizon={horizon} />
+            ) : page === 'summary' ? (
+              <SummaryPage key={horizon} horizon={horizon} />
+            ) : page === 'forecast' ? (
+              <ForecastPage key={horizon} horizon={horizon} />
+            ) : page === 'waste' ? (
+              <WastePage key={horizon} horizon={horizon} />
             ) : (
               <PlaceholderPage title={pageTitle} />
             )}

@@ -68,7 +68,7 @@ export function ProposalRow({
       >
         <TableCell className="py-2">
           <div className="flex items-center gap-3">
-            <ProductThumb category={product.category} />
+            <ProductThumb category={product.category} imageUrl={product.imageUrl} name={product.name} />
             <div className="min-w-0">
               <div className="max-w-48 text-base leading-snug font-medium whitespace-normal">{product.name}</div>
               <div className="text-sm text-muted-foreground">

@@ -57,6 +57,9 @@ export interface OrderTask {
     category: Category
     /** Unidades por bulto. */
     packSize: number
+    imageUrl?: string
+    /** Días hasta caducidad del stock actual. Solo perecederos. Viene del backend. */
+    daysToExpiry?: number
   }
   /** Unidades en tienda y almacén. */
   stock: { store: number; warehouse: number }

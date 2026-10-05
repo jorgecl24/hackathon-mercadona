@@ -40,8 +40,24 @@ const ICONS: Record<Category, LucideIcon> = {
   egg: Egg,
 }
 
-/** Miniatura de producto: mientras no haya fotos, icono de categoría. */
-export function ProductThumb({ category }: { category: Category }) {
+interface ProductThumbProps {
+  category: Category
+  imageUrl?: string
+  name?: string
+}
+
+export function ProductThumb({ category, imageUrl, name }: ProductThumbProps) {
+  if (imageUrl) {
+    return (
+      <span
+        aria-hidden
+        className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-lg border bg-background"
+      >
+        <img src={imageUrl} alt={name ?? ''} className="size-10 object-contain" />
+      </span>
+    )
+  }
+
   const Icon = ICONS[category]
   return (
     <span
