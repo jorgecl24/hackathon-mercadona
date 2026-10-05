@@ -83,3 +83,164 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── Driver.js tour — MercaPredict theme ───────────────────────── */
+
+.driver-popover.mercapredict-tour {
+  border-radius: 16px !important;
+  border: 1.5px solid #CFE5C3 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  max-width: 360px !important;
+  min-width: 280px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(63, 125, 43, 0.12) !important;
+  font-family: 'Inter Variable', system-ui, sans-serif !important;
+}
+
+/* Header / title */
+.driver-popover.mercapredict-tour .driver-popover-title {
+  background: linear-gradient(135deg, #3F7D2B 0%, #609E42 100%) !important;
+  color: #ffffff !important;
+  padding: 18px 44px 14px 20px !important;
+  border-radius: 14px 14px 0 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Close button — sobre el fondo verde */
+.driver-popover.mercapredict-tour .driver-popover-close-btn {
+  color: rgba(255, 255, 255, 0.85) !important;
+  top: 14px !important;
+  right: 14px !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+}
+
+/* Description */
+.driver-popover.mercapredict-tour .driver-popover-description {
+  padding: 16px 20px 10px !important;
+  color: #2B2B2B !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-description b,
+.driver-popover.mercapredict-tour .driver-popover-description strong {
+  color: #3F7D2B !important;
+  font-weight: 600 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-description em {
+  color: #6B6B66 !important;
+  font-style: normal !important;
+  font-size: 13px !important;
+}
+
+/* Footer */
+.driver-popover.mercapredict-tour .driver-popover-footer {
+  padding: 10px 20px 16px !important;
+  border-top: 1px solid #E3E3DE !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-direction: row !important;
+}
+
+/* Progress text */
+.driver-popover.mercapredict-tour .driver-popover-progress-text {
+  font-size: 12px !important;
+  color: #6B6B66 !important;
+  flex: 1 !important;
+  order: -1 !important;
+}
+
+/* Buttons */
+.driver-popover.mercapredict-tour .driver-popover-next-btn {
+  background: #3F7D2B !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  line-height: 1.4 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-next-btn:hover {
+  background: #2d5c1e !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-prev-btn {
+  background: transparent !important;
+  color: #6B6B66 !important;
+  border: 1px solid #E3E3DE !important;
+  border-radius: 9999px !important;
+  padding: 7px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  line-height: 1.4 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-prev-btn:hover {
+  background: #F5F5F2 !important;
+  color: #2B2B2B !important;
+}
+
+/* Arrow — hereda el color del body (blanco) */
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-left .driver-popover-arrow {
+  border-right-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-right .driver-popover-arrow {
+  border-left-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-top .driver-popover-arrow {
+  border-bottom-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-bottom .driver-popover-arrow {
+  border-top-color: #ffffff !important;
+}
+
+/* Overlay más suave y verde */
+.driver-overlay {
+  background: rgba(20, 50, 10, 0.55) !important;
+}
+
+/* ─── Merki — mascota del tour ──────────────────────────────────── */
+
+.tour-mascot-container {
+  position: absolute !important;
+  bottom: -32px !important;
+  right: -28px !important;
+  width: 84px !important;
+  height: 96px !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22)) drop-shadow(0 2px 4px rgba(63, 125, 43, 0.3)) !important;
+}
+
+.tour-mascot-container svg {
+  width: 100% !important;
+  height: 100% !important;
+  animation: merki-float 2.8s ease-in-out infinite !important;
+}
+
+@keyframes merki-float {
+  0%,  100% { transform: translateY(0)    rotate(0deg);  }
+  28%        { transform: translateY(-6px) rotate(2.5deg); }
+  72%        { transform: translateY(-3px) rotate(-1.5deg); }
+}
