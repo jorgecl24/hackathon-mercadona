@@ -104,28 +104,16 @@ const backendLookup = new Map<string, BackendPrediction>(
   backendData.predicciones_productos.map((p) => [p.nombre_producto, p]),
 )
 
-/** Sum the first N days of backend daily predictions; extrapolates when N > 8. */
-function backendForecast(pred: BackendPrediction, horizon: Horizon): number {
-  const days = pred.predicciones_diarias
-  if (horizon <= days.length) {
-    return days.slice(0, horizon).reduce((a, b) => a + b, 0)
-  }
-  const total = days.reduce((a, b) => a + b, 0)
-  return Math.round((total / days.length) * horizon)
-}
-
 /** Derives a Factor chip from the backend motivo string. */
 function motivoToFactor(motivo: string, baselineForecast: number, actualForecast: number): Factor {
   const effect = baselineForecast > 0
     ? Math.max(-0.5, Math.min(0.5, (actualForecast - baselineForecast) / baselineForecast))
     : 0
-  const pct = Math.round(Math.abs(effect) * 100)
-  const sign = effect >= 0 ? '+' : '−'
 
   if (motivo.startsWith('+')) {
-    return { kind: 'weather', label: `Temp. mínima alta · ${sign}${pct} %`, effect }
+    return { kind: 'weather', label: 'Temp. mínima alta', effect }
   }
-  return { kind: 'weather', label: `Temp. mínima baja · ${sign}${pct} %`, effect }
+  return { kind: 'weather', label: 'Temp. mínima baja', effect }
 }
 
 /* ─── Build tasks ────────────────────────────────────────────────── */
@@ -150,8 +138,11 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
     let score: number
     let factors: Factor[]
 
+    let dailyForecast: number[] | undefined
+
     if (pred) {
-      forecastSales = backendForecast(pred, horizon)
+      dailyForecast = pred.predicciones_diarias
+      forecastSales = dailyForecast.reduce((a, b) => a + b, 0)
       score = parseInt(pred.confianza_historica_reciente, 10)
       const seedBaseline = Math.round(seed.weeklySales * scale)
       factors = [motivoToFactor(pred.motivo_principal_ajuste, seedBaseline, forecastSales)]
@@ -176,6 +167,7 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
       usualOrder: roundToPacks(seed.usualWeekly * scale, seed.packSize),
       suggested: roundToPacks(forecastSales * (1 + SAFETY_MARGIN) - stock, seed.packSize),
       forecastSales,
+      dailyForecast,
       factors,
       confidence: { level: confidenceLevel(score), score },
       status: 'pending',

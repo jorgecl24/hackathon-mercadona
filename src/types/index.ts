@@ -69,6 +69,8 @@ export interface OrderTask {
   suggested: number
   /** Venta prevista en el horizonte. */
   forecastSales: number
+  /** Desglose diario de la previsión (del backend, cuando disponible). */
+  dailyForecast?: number[]
   factors: Factor[]
   confidence: { level: ConfidenceLevel; score: number }
   status: TaskStatus

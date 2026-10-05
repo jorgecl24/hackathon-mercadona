@@ -95,11 +95,20 @@ function buildChartData(
   effectiveFactors: Factor[],
   now: Date,
 ): { points: ChartPoint[]; todayLabel: string; eventLines: EventLine[] } {
-  const baseDailyUnits = task.usualOrder / HORIZON
+  // When real backend data is available, use it as baseline and scale by the
+  // active-factors multiplier so the toggles in the "Señales" panel still work.
+  const totalLift = task.factors.reduce((s, f) => s + f.effect, 0)
   const activeLift = effectiveFactors
     .filter((f) => activeKinds.has(f.kind))
     .reduce((s, f) => s + f.effect, 0)
-  const dailyForecast = baseDailyUnits * (1 + activeLift)
+  // How much to scale the backend values when the user toggles signals.
+  const liftMultiplier = (1 + totalLift) !== 0 ? (1 + activeLift) / (1 + totalLift) : 1
+
+  // Base daily units (used for history and as fallback for forecast).
+  const avgDailyReal = task.dailyForecast
+    ? task.dailyForecast.reduce((a, b) => a + b, 0) / task.dailyForecast.length
+    : null
+  const baseDailyUnits = avgDailyReal ?? (task.usualOrder / HORIZON)
   const margin = ((100 - task.confidence.score) / 100) * 0.5
 
   const points: ChartPoint[] = []
@@ -115,11 +124,17 @@ function buildChartData(
 
   const todayLabel = fmtLabel(now)
 
-  // Forecast from today through today + HORIZON
+  // Forecast: use real backend daily values when available (scaled by active lift)
+  // otherwise fall back to synthetic calculation.
   for (let i = 0; i <= HORIZON; i++) {
     const d = new Date(now)
     d.setDate(d.getDate() + i)
-    const fc = Math.round(dailyForecast * DOW_FACTORS[d.getDay()])
+    let fc: number
+    if (task.dailyForecast && i < task.dailyForecast.length) {
+      fc = Math.max(0, Math.round(task.dailyForecast[i] * liftMultiplier))
+    } else {
+      fc = Math.round(baseDailyUnits * (1 + activeLift) * DOW_FACTORS[d.getDay()])
+    }
     const hi = Math.round(fc * (1 + margin))
     const lo = Math.max(0, Math.round(fc * (1 - margin)))
     points.push({ label: fmtLabel(d), historical: null, forecast: fc, bandBottom: lo, bandTop: hi - lo })
@@ -330,7 +345,9 @@ export function ForecastPage() {
     const activeLift = effectiveFactors
       .filter((f) => activeKinds.has(f.kind))
       .reduce((s, f) => s + f.effect, 0)
-    const activeForecast = Math.round(task.usualOrder * (1 + activeLift))
+    const totalLift = task.factors.reduce((s, f) => s + f.effect, 0)
+    const liftMultiplier = (1 + totalLift) !== 0 ? (1 + activeLift) / (1 + totalLift) : 1
+    const activeForecast = Math.round(task.forecastSales * liftMultiplier)
     const stock = task.stock.store + task.stock.warehouse
     const suggested =
       Math.ceil(Math.max(0, activeForecast * 1.1 - stock) / task.product.packSize) *
