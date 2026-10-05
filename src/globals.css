@@ -224,23 +224,23 @@
 
 .tour-mascot-container {
   position: absolute !important;
-  bottom: -32px !important;
-  right: -28px !important;
-  width: 84px !important;
-  height: 96px !important;
+  bottom: -38px !important;
+  right: -30px !important;
+  width: 88px !important;
+  height: 114px !important;
   pointer-events: none !important;
   z-index: 99999 !important;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.22)) drop-shadow(0 2px 4px rgba(63, 125, 43, 0.3)) !important;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.2)) drop-shadow(0 2px 4px rgba(60, 122, 40, 0.25)) !important;
 }
 
 .tour-mascot-container svg {
   width: 100% !important;
   height: 100% !important;
-  animation: merki-float 2.8s ease-in-out infinite !important;
+  animation: merki-float 3s ease-in-out infinite !important;
 }
 
 @keyframes merki-float {
-  0%,  100% { transform: translateY(0)    rotate(0deg);  }
-  28%        { transform: translateY(-6px) rotate(2.5deg); }
-  72%        { transform: translateY(-3px) rotate(-1.5deg); }
+  0%,  100% { transform: translateY(0)    rotate(0deg);   }
+  35%        { transform: translateY(-7px) rotate(1.8deg); }
+  70%        { transform: translateY(-3px) rotate(-1deg);  }
 }
