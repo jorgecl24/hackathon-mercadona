@@ -348,9 +348,8 @@ export function ForecastPage() {
     const totalLift = task.factors.reduce((s, f) => s + f.effect, 0)
     const liftMultiplier = (1 + totalLift) !== 0 ? (1 + activeLift) / (1 + totalLift) : 1
     const activeForecast = Math.round(task.forecastSales * liftMultiplier)
-    const stock = task.stock.store + task.stock.warehouse
     const suggested =
-      Math.ceil(Math.max(0, activeForecast * 1.1 - stock) / task.product.packSize) *
+      Math.ceil(Math.max(0, activeForecast) / task.product.packSize) *
       task.product.packSize
 
     return { ...chart, activeSuggested: suggested }

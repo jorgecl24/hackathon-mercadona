@@ -128,8 +128,6 @@ function motivoToFactor(motivo: string, baselineForecast: number, actualForecast
 
 /* ─── Build tasks ────────────────────────────────────────────────── */
 
-const SAFETY_MARGIN = 0.1
-
 const roundToPacks = (units: number, packSize: number) =>
   Math.ceil(Math.max(0, units) / packSize) * packSize
 
@@ -140,7 +138,6 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
   const scale = horizon / 8
 
   return seeds.map((seed) => {
-    const stock = seed.store + seed.warehouse
     const backendKey = SEED_TO_BACKEND[seed.id]
     const pred = backendKey ? backendLookup.get(backendKey) : undefined
 
@@ -175,7 +172,7 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
       },
       stock: { store: seed.store, warehouse: seed.warehouse },
       usualOrder: roundToPacks(seed.usualWeekly * scale, seed.packSize),
-      suggested: roundToPacks(forecastSales * (1 + SAFETY_MARGIN) - stock, seed.packSize),
+      suggested: roundToPacks(forecastSales, seed.packSize),
       forecastSales,
       dailyForecast,
       factors,
