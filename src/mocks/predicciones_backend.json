@@ -1,0 +1,396 @@
+{
+    "fecha_calculo": "2026-10-05",
+    "tienda": "Mercadona - Principal",
+    "predicciones_productos": [
+        {
+            "nombre_producto": "Leche entera Hacendado 1 L",
+            "predicciones_diarias": [
+                386,
+                394,
+                369,
+                353,
+                524,
+                300,
+                369,
+                388
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "76%"
+        },
+        {
+            "nombre_producto": "Leche semidesnatada Hacendado 1 L",
+            "predicciones_diarias": [
+                390,
+                388,
+                381,
+                363,
+                507,
+                305,
+                394,
+                387
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "76%"
+        },
+        {
+            "nombre_producto": "Yogur natural Hacendado",
+            "predicciones_diarias": [
+                221,
+                223,
+                212,
+                201,
+                288,
+                158,
+                219,
+                220
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "94%"
+        },
+        {
+            "nombre_producto": "Huevos L docena",
+            "predicciones_diarias": [
+                168,
+                170,
+                163,
+                154,
+                231,
+                122,
+                160,
+                167
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "92%"
+        },
+        {
+            "nombre_producto": "Barra de pan",
+            "predicciones_diarias": [
+                545,
+                554,
+                513,
+                521,
+                768,
+                404,
+                535,
+                551
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "76%"
+        },
+        {
+            "nombre_producto": "Pechuga de pollo fileteada 500 g",
+            "predicciones_diarias": [
+                135,
+                135,
+                126,
+                116,
+                181,
+                95,
+                130,
+                133
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "82%"
+        },
+        {
+            "nombre_producto": "Horchata Hacendado 1 L",
+            "predicciones_diarias": [
+                85,
+                94,
+                100,
+                11,
+                115,
+                50,
+                125,
+                82
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "72%"
+        },
+        {
+            "nombre_producto": "Polos de limón Hacendado 10 ud",
+            "predicciones_diarias": [
+                66,
+                73,
+                82,
+                9,
+                89,
+                29,
+                99,
+                63
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "77%"
+        },
+        {
+            "nombre_producto": "Sandía baja en semillas",
+            "predicciones_diarias": [
+                129,
+                140,
+                161,
+                16,
+                161,
+                77,
+                175,
+                121
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "64%"
+        },
+        {
+            "nombre_producto": "Conos nata y chocolate Hacendado",
+            "predicciones_diarias": [
+                99,
+                108,
+                120,
+                14,
+                129,
+                57,
+                141,
+                94
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "66%"
+        },
+        {
+            "nombre_producto": "Fresas 500 g",
+            "predicciones_diarias": [
+                49,
+                54,
+                62,
+                6,
+                67,
+                27,
+                70,
+                47
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "73%"
+        },
+        {
+            "nombre_producto": "Cerveza Steinburg lata",
+            "predicciones_diarias": [
+                137,
+                138,
+                140,
+                107,
+                293,
+                314,
+                193,
+                136
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "97%"
+        },
+        {
+            "nombre_producto": "Refresco de cola Hacendado 2 L",
+            "predicciones_diarias": [
+                90,
+                89,
+                91,
+                72,
+                188,
+                268,
+                164,
+                89
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "80%"
+        },
+        {
+            "nombre_producto": "Hamburguesa de vacuno",
+            "predicciones_diarias": [
+                53,
+                54,
+                56,
+                46,
+                115,
+                213,
+                130,
+                54
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "77%"
+        },
+        {
+            "nombre_producto": "Patatas fritas lisas Hacendado",
+            "predicciones_diarias": [
+                70,
+                70,
+                75,
+                60,
+                149,
+                236,
+                145,
+                70
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "95%"
+        },
+        {
+            "nombre_producto": "Hummus clásico Hacendado",
+            "predicciones_diarias": [
+                42,
+                43,
+                47,
+                38,
+                90,
+                200,
+                122,
+                43
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "79%"
+        },
+        {
+            "nombre_producto": "Salmón fresco en lomos 250 g",
+            "predicciones_diarias": [
+                44,
+                46,
+                40,
+                21,
+                66,
+                47,
+                33,
+                43
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "78%"
+        },
+        {
+            "nombre_producto": "Aguacate malla 4 ud",
+            "predicciones_diarias": [
+                32,
+                33,
+                30,
+                15,
+                44,
+                34,
+                24,
+                31
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "91%"
+        },
+        {
+            "nombre_producto": "Crema de pistacho Hacendado 200 g",
+            "predicciones_diarias": [
+                21,
+                22,
+                20,
+                11,
+                30,
+                21,
+                15,
+                21
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "68%"
+        },
+        {
+            "nombre_producto": "Zumo de naranja exprimido 1 L",
+            "predicciones_diarias": [
+                48,
+                50,
+                44,
+                24,
+                67,
+                50,
+                34,
+                47
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "85%"
+        },
+        {
+            "nombre_producto": "Kéfir natural Hacendado",
+            "predicciones_diarias": [
+                30,
+                30,
+                30,
+                29,
+                30,
+                31,
+                29,
+                29
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "100%"
+        },
+        {
+            "nombre_producto": "Queso fresco batido 0 % Hacendado",
+            "predicciones_diarias": [
+                72,
+                76,
+                64,
+                40,
+                45,
+                71,
+                45,
+                71
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "82%"
+        },
+        {
+            "nombre_producto": "Yogur griego Hacendado",
+            "predicciones_diarias": [
+                60,
+                60,
+                61,
+                60,
+                58,
+                58,
+                62,
+                60
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "75%"
+        },
+        {
+            "nombre_producto": "Plátano de Canarias 1 kg",
+            "predicciones_diarias": [
+                98,
+                98,
+                98,
+                96,
+                102,
+                97,
+                96,
+                98
+            ],
+            "motivo_principal_ajuste": "- Temp_Min",
+            "confianza_historica_reciente": "87%"
+        },
+        {
+            "nombre_producto": "Naranja de mesa 2 kg",
+            "predicciones_diarias": [
+                50,
+                51,
+                51,
+                50,
+                47,
+                52,
+                52,
+                51
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "80%"
+        },
+        {
+            "nombre_producto": "Lechuga iceberg",
+            "predicciones_diarias": [
+                80,
+                80,
+                81,
+                80,
+                85,
+                73,
+                83,
+                80
+            ],
+            "motivo_principal_ajuste": "+ Temp_Min",
+            "confianza_historica_reciente": "80%"
+        }
+    ]
+}

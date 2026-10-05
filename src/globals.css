@@ -1,0 +1,240 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Tokens de la guía de diseño de MercaPredict (sección 9). */
+:root {
+  --background: #FFFFFF;
+  --foreground: #2B2B2B;
+  --muted: #F5F5F2;
+  --muted-foreground: #6B6B66;
+  --border: #E3E3DE;
+  --primary: #3F7D2B;          /* botón principal, texto blanco encima */
+  --primary-foreground: #FFFFFF;
+  --brand: #609E42;            /* cabecera, acentos, solo con texto grande */
+  --warning: #FFA102;          /* exceso, merma, caducidad; texto oscuro */
+  --warning-soft: #FFF1D6;
+  --destructive: #D32F2F;      /* falta de stock */
+  --destructive-soft: #FDE7E7;
+  --success-soft: #E8F3E1;
+  --radius: 0.75rem;
+
+  /* Alias que esperan los componentes de shadcn/ui */
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --accent: var(--success-soft);
+  --accent-foreground: var(--foreground);
+  --input: var(--border);
+  --ring: var(--primary);
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-brand: var(--brand);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-success-soft: var(--success-soft);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Driver.js tour — MercaPredict theme ───────────────────────── */
+
+.driver-popover.mercapredict-tour {
+  border-radius: 16px !important;
+  border: 1.5px solid #CFE5C3 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  max-width: 360px !important;
+  min-width: 280px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(63, 125, 43, 0.12) !important;
+  font-family: 'Inter Variable', system-ui, sans-serif !important;
+}
+
+/* Header / title */
+.driver-popover.mercapredict-tour .driver-popover-title {
+  background: linear-gradient(135deg, #3F7D2B 0%, #609E42 100%) !important;
+  color: #ffffff !important;
+  padding: 18px 44px 14px 20px !important;
+  border-radius: 14px 14px 0 0 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em !important;
+  min-height: 48px !important;
+}
+
+/* Close button — sobre el fondo verde */
+.driver-popover.mercapredict-tour .driver-popover-close-btn {
+  color: rgba(255, 255, 255, 0.85) !important;
+  top: 14px !important;
+  right: 14px !important;
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: background 0.15s !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+}
+
+/* Description */
+.driver-popover.mercapredict-tour .driver-popover-description {
+  padding: 16px 20px 10px !important;
+  color: #2B2B2B !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-description b,
+.driver-popover.mercapredict-tour .driver-popover-description strong {
+  color: #3F7D2B !important;
+  font-weight: 600 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-description em {
+  color: #6B6B66 !important;
+  font-style: normal !important;
+  font-size: 13px !important;
+}
+
+/* Footer */
+.driver-popover.mercapredict-tour .driver-popover-footer {
+  padding: 10px 20px 16px !important;
+  border-top: 1px solid #E3E3DE !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-direction: row !important;
+}
+
+/* Progress text */
+.driver-popover.mercapredict-tour .driver-popover-progress-text {
+  font-size: 12px !important;
+  color: #6B6B66 !important;
+  flex: 1 !important;
+  order: -1 !important;
+}
+
+/* Buttons */
+.driver-popover.mercapredict-tour .driver-popover-next-btn {
+  background: #3F7D2B !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  line-height: 1.4 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-next-btn:hover {
+  background: #2d5c1e !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-prev-btn {
+  background: transparent !important;
+  color: #6B6B66 !important;
+  border: 1px solid #E3E3DE !important;
+  border-radius: 9999px !important;
+  padding: 7px 14px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  line-height: 1.4 !important;
+}
+.driver-popover.mercapredict-tour .driver-popover-prev-btn:hover {
+  background: #F5F5F2 !important;
+  color: #2B2B2B !important;
+}
+
+/* Arrow — hereda el color del body (blanco) */
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-left .driver-popover-arrow {
+  border-right-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-right .driver-popover-arrow {
+  border-left-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-top .driver-popover-arrow {
+  border-bottom-color: #ffffff !important;
+}
+.driver-popover.mercapredict-tour.driver-popover-arrow-side-bottom .driver-popover-arrow {
+  border-top-color: #ffffff !important;
+}
+
+/* Overlay más suave y verde */
+.driver-overlay {
+  background: rgba(20, 50, 10, 0.55) !important;
+}
+
+/* ─── Merki — mascota del tour ──────────────────────────────────── */
+
+.tour-mascot-corner {
+  position: fixed !important;
+  width: 110px !important;
+  height: 110px !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  z-index: 1000000001 !important;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22)) !important;
+  animation: merki-float 3s ease-in-out infinite !important;
+}
+
+@keyframes merki-float {
+  0%,  100% { transform: translateY(0); }
+  50%        { transform: translateY(-6px); }
+}
