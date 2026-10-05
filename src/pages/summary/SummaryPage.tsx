@@ -12,7 +12,6 @@ import {
   Fish,
   IceCreamCone,
   Milk,
-  Package,
   ShoppingBasket,
   Snowflake,
   TrendingUp,

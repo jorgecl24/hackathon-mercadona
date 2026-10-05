@@ -2,8 +2,6 @@ import { driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 import type { PageId } from '@/components/layout/nav'
 
-const MERKI_HTML = `<img src="/mascot.png" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:contain;"/>`
-
 export function startTour(navigate: (page: PageId) => void) {
   // Siempre empieza en Pedido para que los primeros pasos encuentren sus elementos
   navigate('order')

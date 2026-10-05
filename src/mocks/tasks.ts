@@ -1,12 +1,12 @@
 import type { Category, ConfidenceLevel, Factor, Horizon, OrderTask, Section } from '@/types'
+import backendData from './predicciones_backend.json'
 
 /*
  * Tienda ficticia de Valencia en una semana de octubre con «veranillo»
  * (31 ºC), el festivo del 9 de octubre y partido en Mestalla.
  *
- * `weeklySales` es la venta habitual de 7 días sin señales. La previsión
- * aplica los factores encima, y el sugerido cubre la previsión más un 10 %
- * de seguridad, descontando el stock y redondeando a bultos.
+ * forecastSales, confidence y factors se toman del backend cuando hay match.
+ * El resto (stock, imageUrl, packSize…) viene de los seeds hardcodeados.
  */
 interface ProductSeed {
   id: string
@@ -66,6 +66,70 @@ const seeds: ProductSeed[] = [
   { id: 'p27', name: 'Huevos L docena', section: 'Huevos', category: 'egg', packSize: 10, store: 60, warehouse: 60, weeklySales: 260, usualWeekly: 150, factors: [holiday(0.1)], score: 89, imageUrl: '/products/p27.jpg' },
 ]
 
+/* ─── Backend adapter ────────────────────────────────────────────── */
+
+/** Maps each seed ID to the matching nombre_producto in the backend JSON. */
+const SEED_TO_BACKEND: Record<string, string> = {
+  p02: 'Cerveza Steinburg lata',
+  p03: 'Refresco de cola Hacendado 2 L',
+  p04: 'Horchata Hacendado 1 L',
+  p05: 'Zumo de naranja exprimido 1 L',
+  p06: 'Leche entera Hacendado 1 L',
+  p07: 'Leche semidesnatada Hacendado 1 L',
+  p08: 'Yogur natural Hacendado',
+  p09: 'Yogur griego Hacendado',
+  p10: 'Kéfir natural Hacendado',
+  p11: 'Queso fresco batido 0 % Hacendado',
+  p12: 'Conos nata y chocolate Hacendado',
+  p13: 'Polos de limón Hacendado 10 ud',
+  p14: 'Sandía baja en semillas',
+  p15: 'Plátano de Canarias 1 kg',
+  p16: 'Fresas 500 g',
+  p17: 'Naranja de mesa 2 kg',
+  p18: 'Lechuga iceberg',
+  p19: 'Aguacate malla 4 ud',
+  p20: 'Pechuga de pollo fileteada 500 g',
+  p21: 'Hamburguesa de vacuno',
+  p22: 'Salmón fresco en lomos 250 g',
+  p23: 'Barra de pan',
+  p24: 'Patatas fritas lisas Hacendado',
+  p25: 'Hummus clásico Hacendado',
+  p26: 'Crema de pistacho Hacendado 200 g',
+  p27: 'Huevos L docena',
+}
+
+type BackendPrediction = (typeof backendData.predicciones_productos)[number]
+
+const backendLookup = new Map<string, BackendPrediction>(
+  backendData.predicciones_productos.map((p) => [p.nombre_producto, p]),
+)
+
+/** Sum the first N days of backend daily predictions; extrapolates when N > 8. */
+function backendForecast(pred: BackendPrediction, horizon: Horizon): number {
+  const days = pred.predicciones_diarias
+  if (horizon <= days.length) {
+    return days.slice(0, horizon).reduce((a, b) => a + b, 0)
+  }
+  const total = days.reduce((a, b) => a + b, 0)
+  return Math.round((total / days.length) * horizon)
+}
+
+/** Derives a Factor chip from the backend motivo string. */
+function motivoToFactor(motivo: string, baselineForecast: number, actualForecast: number): Factor {
+  const effect = baselineForecast > 0
+    ? Math.max(-0.5, Math.min(0.5, (actualForecast - baselineForecast) / baselineForecast))
+    : 0
+  const pct = Math.round(Math.abs(effect) * 100)
+  const sign = effect >= 0 ? '+' : '−'
+
+  if (motivo.startsWith('+')) {
+    return { kind: 'weather', label: `Temp. mínima alta · ${sign}${pct} %`, effect }
+  }
+  return { kind: 'weather', label: `Temp. mínima baja · ${sign}${pct} %`, effect }
+}
+
+/* ─── Build tasks ────────────────────────────────────────────────── */
+
 const SAFETY_MARGIN = 0.1
 
 const roundToPacks = (units: number, packSize: number) =>
@@ -74,7 +138,7 @@ const roundToPacks = (units: number, packSize: number) =>
 const confidenceLevel = (score: number): ConfidenceLevel =>
   score >= 80 ? 'high' : score >= 60 ? 'medium' : 'low'
 
-/** Con horizontes largos la previsión pierde precisión. */
+/** Con horizontes largos la previsión pierde precisión (solo para seeds sin backend). */
 const HORIZON_SCORE_SHIFT: Record<Horizon, number> = { 3: 3, 7: 0, 14: -6 }
 
 export function buildOrderTasks(horizon: Horizon): OrderTask[] {
@@ -82,9 +146,24 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
 
   return seeds.map((seed) => {
     const stock = seed.store + seed.warehouse
-    const lift = seed.factors.reduce((sum, f) => sum + f.effect, 0)
-    const forecastSales = Math.round(seed.weeklySales * scale * (1 + lift))
-    const score = Math.min(99, seed.score + HORIZON_SCORE_SHIFT[horizon])
+    const backendKey = SEED_TO_BACKEND[seed.id]
+    const pred = backendKey ? backendLookup.get(backendKey) : undefined
+
+    let forecastSales: number
+    let score: number
+    let factors: Factor[]
+
+    if (pred) {
+      forecastSales = backendForecast(pred, horizon)
+      score = parseInt(pred.confianza_historica_reciente, 10)
+      const seedBaseline = Math.round(seed.weeklySales * scale)
+      factors = [motivoToFactor(pred.motivo_principal_ajuste, seedBaseline, forecastSales)]
+    } else {
+      const lift = seed.factors.reduce((sum, f) => sum + f.effect, 0)
+      forecastSales = Math.round(seed.weeklySales * scale * (1 + lift))
+      score = Math.min(99, seed.score + HORIZON_SCORE_SHIFT[horizon])
+      factors = seed.factors
+    }
 
     return {
       id: seed.id,
@@ -100,7 +179,7 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
       usualOrder: roundToPacks(seed.usualWeekly * scale, seed.packSize),
       suggested: roundToPacks(forecastSales * (1 + SAFETY_MARGIN) - stock, seed.packSize),
       forecastSales,
-      factors: seed.factors,
+      factors,
       confidence: { level: confidenceLevel(score), score },
       status: 'pending',
     }
