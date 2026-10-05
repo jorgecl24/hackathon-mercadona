@@ -179,7 +179,12 @@ function WasteSkeleton() {
 
 /* ─── Page ───────────────────────────────────────────────────────── */
 
-export function WastePage({ horizon }: { horizon: Horizon }) {
+interface WastePageProps {
+  horizon: Horizon
+  onWasteCount?: (n: number) => void
+}
+
+export function WastePage({ horizon, onWasteCount }: WastePageProps) {
   const [data, setData] = useState<OrderTasksResponse | null>(null)
   const [loadError, setLoadError] = useState(false)
 
@@ -197,6 +202,8 @@ export function WastePage({ horizon }: { horizon: Horizon }) {
     () => (data ? buildWasteItems(data.tasks, horizon) : []),
     [data, horizon],
   )
+
+  useEffect(() => { onWasteCount?.(items.length) }, [items.length, onWasteCount])
 
   if (loadError) {
     return (

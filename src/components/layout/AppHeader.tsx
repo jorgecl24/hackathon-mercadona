@@ -1,5 +1,6 @@
-import { CalendarDays, Clock, Store, Sun } from 'lucide-react'
+import { CalendarDays, Clock, HelpCircle, Store, Sun } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { formatLongDate } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import type { Horizon } from '@/types'
@@ -10,6 +11,7 @@ interface AppHeaderProps {
   today: Date
   horizon: Horizon
   onHorizonChange: (horizon: Horizon) => void
+  onStartTour: () => void
 }
 
 function HeaderItem({ icon, children }: { icon: ReactNode; children: ReactNode }) {
@@ -21,7 +23,7 @@ function HeaderItem({ icon, children }: { icon: ReactNode; children: ReactNode }
   )
 }
 
-export function AppHeader({ today, horizon, onHorizonChange }: AppHeaderProps) {
+export function AppHeader({ today, horizon, onHorizonChange, onStartTour }: AppHeaderProps) {
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center gap-4 border-b bg-background px-8 xl:gap-6">
       <HeaderItem icon={<Store aria-hidden className="size-4" />}>
@@ -43,6 +45,7 @@ export function AppHeader({ today, horizon, onHorizonChange }: AppHeaderProps) {
       <div
         role="group"
         aria-label="Horizonte de previsión"
+        data-tour="horizon"
         className="ml-auto flex items-center gap-1 rounded-full border bg-muted p-1"
       >
         {HORIZONS.map((h) => {
@@ -63,6 +66,20 @@ export function AppHeader({ today, horizon, onHorizonChange }: AppHeaderProps) {
           )
         })}
       </div>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={onStartTour}
+            aria-label="Ver tour de la aplicación"
+            className="flex size-9 shrink-0 items-center justify-center rounded-full border text-muted-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          >
+            <HelpCircle aria-hidden className="size-4" />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>Ver tour</TooltipContent>
+      </Tooltip>
     </header>
   )
 }
