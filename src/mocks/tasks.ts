@@ -138,11 +138,8 @@ const roundToPacks = (units: number, packSize: number) =>
 const confidenceLevel = (score: number): ConfidenceLevel =>
   score >= 80 ? 'high' : score >= 60 ? 'medium' : 'low'
 
-/** Con horizontes largos la previsión pierde precisión (solo para seeds sin backend). */
-const HORIZON_SCORE_SHIFT: Record<Horizon, number> = { 3: 3, 7: 0, 14: -6 }
-
 export function buildOrderTasks(horizon: Horizon): OrderTask[] {
-  const scale = horizon / 7
+  const scale = horizon / 8
 
   return seeds.map((seed) => {
     const stock = seed.store + seed.warehouse
@@ -161,7 +158,7 @@ export function buildOrderTasks(horizon: Horizon): OrderTask[] {
     } else {
       const lift = seed.factors.reduce((sum, f) => sum + f.effect, 0)
       forecastSales = Math.round(seed.weeklySales * scale * (1 + lift))
-      score = Math.min(99, seed.score + HORIZON_SCORE_SHIFT[horizon])
+      score = seed.score
       factors = seed.factors
     }
 

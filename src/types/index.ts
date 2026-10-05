@@ -1,4 +1,4 @@
-export type Horizon = 3 | 7 | 14
+export type Horizon = 8
 
 export type Section =
   | 'Lácteos'

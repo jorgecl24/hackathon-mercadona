@@ -15,14 +15,14 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components
 import { formatNumber, formatTime, formatTimeLeft } from '@/lib/format'
 import { finalQuantity, deviation } from '@/lib/tasks'
 import { cn } from '@/lib/utils'
-import type { ConfidenceLevel, Horizon, OrderTask, OrderTasksResponse, Section, TaskPatch } from '@/types'
+import type { ConfidenceLevel, OrderTask, OrderTasksResponse, Section, TaskPatch } from '@/types'
 import { ProposalRow, STICKY_CELL, type AdjustDraft } from './ProposalRow'
 
 const SAVE_ERROR = 'No hemos podido guardar. Inténtalo de nuevo'
 
 /* ─── CSV export ─────────────────────────────────────────────────── */
 
-function exportCSV(tasks: OrderTask[], horizon: Horizon) {
+function exportCSV(tasks: OrderTask[]) {
   const BOM = '﻿'
   const CONF: Record<ConfidenceLevel, string> = { high: 'Alta', medium: 'Media', low: 'Baja' }
   const STATUS: Record<string, string> = { pending: 'Pendiente', accepted: 'Aceptado', adjusted: 'Ajustado' }
@@ -44,7 +44,7 @@ function exportCSV(tasks: OrderTask[], horizon: Horizon) {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = `pedido-${horizon}d-${new Date().toISOString().split('T')[0]}.csv`
+  a.download = `pedido-8d-${new Date().toISOString().split('T')[0]}.csv`
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
@@ -164,11 +164,10 @@ function FilterBar({ filters, sections, total, filtered, onChange, onClear }: Fi
 /* ─── Page ───────────────────────────────────────────────────────── */
 
 interface OrderProposalPageProps {
-  horizon: Horizon
   onPendingCount?: (n: number) => void
 }
 
-export function OrderProposalPage({ horizon, onPendingCount }: OrderProposalPageProps) {
+export function OrderProposalPage({ onPendingCount }: OrderProposalPageProps) {
   const [data, setData] = useState<OrderTasksResponse | null>(null)
   const [loadError, setLoadError] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
@@ -180,11 +179,11 @@ export function OrderProposalPage({ horizon, onPendingCount }: OrderProposalPage
 
   useEffect(() => {
     let cancelled = false
-    getOrderTasks(horizon)
+    getOrderTasks()
       .then((response) => { if (!cancelled) setData(response) })
       .catch(() => { if (!cancelled) setLoadError(true) })
     return () => { cancelled = true }
-  }, [horizon, reloadKey])
+  }, [reloadKey])
 
   const tasks = useMemo(
     () => [...(data?.tasks ?? [])].sort((a, b) => deviation(b) - deviation(a)),
@@ -318,7 +317,7 @@ export function OrderProposalPage({ horizon, onPendingCount }: OrderProposalPage
         data-tour="export"
         variant="outline"
         size="lg"
-        onClick={() => { exportCSV(tasks, horizon); toast.success('Pedido exportado') }}
+        onClick={() => { exportCSV(tasks); toast.success('Pedido exportado') }}
         aria-label="Exportar pedido en CSV"
       >
         <Download aria-hidden className="size-4" />
@@ -343,7 +342,7 @@ export function OrderProposalPage({ horizon, onPendingCount }: OrderProposalPage
 
   return (
     <PageFrame
-      subtitle={tasks.length > 0 ? `${tasks.length} productos para los próximos ${horizon} días · ${pendingCount} por revisar` : undefined}
+      subtitle={tasks.length > 0 ? `${tasks.length} productos · previsión 8 días · ${pendingCount} por revisar` : undefined}
       action={bulkAction}
       confirmed={confirmedCount}
       total={tasks.length}

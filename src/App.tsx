@@ -10,11 +10,9 @@ import { OrderProposalPage } from '@/pages/order/OrderProposalPage'
 import { PlaceholderPage } from '@/pages/PlaceholderPage'
 import { SummaryPage } from '@/pages/summary/SummaryPage'
 import { WastePage } from '@/pages/waste/WastePage'
-import type { Horizon } from '@/types'
 
 export default function App() {
   const [page, setPage] = useState<PageId>('order')
-  const [horizon, setHorizon] = useState<Horizon>(7)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => window.innerWidth < 1440)
   const [today] = useState(() => new Date())
   const [badges, setBadges] = useState<Partial<Record<PageId, number>>>({})
@@ -34,25 +32,19 @@ export default function App() {
         <div className="flex min-w-0 flex-1 flex-col">
           <AppHeader
             today={today}
-            horizon={horizon}
-            onHorizonChange={setHorizon}
             onStartTour={() => startTour(setPage)}
           />
           <main className="flex-1">
             {page === 'order' ? (
               <OrderProposalPage
-                key={horizon}
-                horizon={horizon}
                 onPendingCount={(n) => setBadges((b) => ({ ...b, order: n || undefined }))}
               />
             ) : page === 'summary' ? (
-              <SummaryPage key={horizon} horizon={horizon} />
+              <SummaryPage />
             ) : page === 'forecast' ? (
-              <ForecastPage key={horizon} horizon={horizon} />
+              <ForecastPage />
             ) : page === 'waste' ? (
               <WastePage
-                key={horizon}
-                horizon={horizon}
                 onWasteCount={(n) => setBadges((b) => ({ ...b, waste: n || undefined }))}
               />
             ) : (

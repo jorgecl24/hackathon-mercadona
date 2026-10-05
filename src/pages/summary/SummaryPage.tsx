@@ -25,7 +25,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { formatNumber } from '@/lib/format'
 import { deviation } from '@/lib/tasks'
 import { cn } from '@/lib/utils'
-import type { Horizon, OrderTask, OrderTasksResponse, Section } from '@/types'
+import type { OrderTask, OrderTasksResponse, Section } from '@/types'
 
 /* ─── Risk helpers ──────────────────────────────────────────────── */
 
@@ -134,7 +134,7 @@ function SummarySkeleton() {
 
 /* ─── Page ──────────────────────────────────────────────────────── */
 
-export function SummaryPage({ horizon }: { horizon: Horizon }) {
+export function SummaryPage() {
   const [data, setData] = useState<OrderTasksResponse | null>(null)
   const [loadError, setLoadError] = useState(false)
 
@@ -142,11 +142,11 @@ export function SummaryPage({ horizon }: { horizon: Horizon }) {
     let cancelled = false
     setData(null)
     setLoadError(false)
-    getOrderTasks(horizon)
+    getOrderTasks()
       .then((r) => { if (!cancelled) setData(r) })
       .catch(() => { if (!cancelled) setLoadError(true) })
     return () => { cancelled = true }
-  }, [horizon])
+  }, [])
 
   const derived = useMemo(() => {
     if (!data) return null

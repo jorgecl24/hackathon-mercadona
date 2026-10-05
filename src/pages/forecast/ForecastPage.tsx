@@ -32,7 +32,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { formatEffect, formatNumber } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import type { Factor, FactorKind, Horizon, OrderTask, OrderTasksResponse } from '@/types'
+import type { Factor, FactorKind, OrderTask, OrderTasksResponse } from '@/types'
 
 /* ─── Factor metadata ────────────────────────────────────────────── */
 
@@ -87,14 +87,15 @@ interface EventLine {
   x: string
 }
 
+const HORIZON = 8 as const
+
 function buildChartData(
   task: OrderTask,
-  horizon: Horizon,
   activeKinds: Set<FactorKind>,
   effectiveFactors: Factor[],
   now: Date,
 ): { points: ChartPoint[]; todayLabel: string; eventLines: EventLine[] } {
-  const baseDailyUnits = task.usualOrder / horizon
+  const baseDailyUnits = task.usualOrder / HORIZON
   const activeLift = effectiveFactors
     .filter((f) => activeKinds.has(f.kind))
     .reduce((s, f) => s + f.effect, 0)
@@ -114,8 +115,8 @@ function buildChartData(
 
   const todayLabel = fmtLabel(now)
 
-  // Forecast from today through today + horizon
-  for (let i = 0; i <= horizon; i++) {
+  // Forecast from today through today + HORIZON
+  for (let i = 0; i <= HORIZON; i++) {
     const d = new Date(now)
     d.setDate(d.getDate() + i)
     const fc = Math.round(dailyForecast * DOW_FACTORS[d.getDay()])
@@ -126,14 +127,14 @@ function buildChartData(
 
   // Orange reference lines for calendar/event factors
   const eventLines: EventLine[] = []
-  if (effectiveFactors.some((f) => f.kind === 'holiday') && horizon >= 3) {
+  if (effectiveFactors.some((f) => f.kind === 'holiday')) {
     const d = new Date(now)
-    d.setDate(d.getDate() + Math.min(4, horizon))
+    d.setDate(d.getDate() + 4)
     eventLines.push({ label: 'Festivo', x: fmtLabel(d) })
   }
-  if (effectiveFactors.some((f) => f.kind === 'event') && horizon >= 5) {
+  if (effectiveFactors.some((f) => f.kind === 'event')) {
     const d = new Date(now)
-    d.setDate(d.getDate() + Math.min(6, horizon))
+    d.setDate(d.getDate() + 6)
     eventLines.push({ label: 'Partido', x: fmtLabel(d) })
   }
 
@@ -275,7 +276,7 @@ function ForecastSkeleton() {
 
 /* ─── Page ───────────────────────────────────────────────────────── */
 
-export function ForecastPage({ horizon }: { horizon: Horizon }) {
+export function ForecastPage() {
   const [data, setData] = useState<OrderTasksResponse | null>(null)
   const [loadError, setLoadError] = useState(false)
   const [selectedId, setSelectedId] = useState('')
@@ -288,7 +289,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
     let cancelled = false
     setData(null)
     setLoadError(false)
-    getOrderTasks(horizon)
+    getOrderTasks()
       .then((r) => {
         if (cancelled) return
         setData(r)
@@ -296,7 +297,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
       })
       .catch(() => { if (!cancelled) setLoadError(true) })
     return () => { cancelled = true }
-  }, [horizon])
+  }, [])
 
   const task: OrderTask | null = useMemo(
     () => data?.tasks.find((t) => t.id === selectedId) ?? null,
@@ -324,7 +325,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
   const { points, todayLabel, eventLines, activeSuggested } = useMemo(() => {
     if (!task) return { points: [], todayLabel: '', eventLines: [], activeSuggested: 0 }
 
-    const chart = buildChartData(task, horizon, activeKinds, effectiveFactors, now)
+    const chart = buildChartData(task, activeKinds, effectiveFactors, now)
 
     const activeLift = effectiveFactors
       .filter((f) => activeKinds.has(f.kind))
@@ -336,7 +337,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
       task.product.packSize
 
     return { ...chart, activeSuggested: suggested }
-  }, [task, horizon, activeKinds, effectiveFactors, now])
+  }, [task, activeKinds, effectiveFactors, now])
 
   const hasWeather = task?.factors.some((f) => f.kind === 'weather') ?? false
   const hasTrend = task?.factors.some((f) => f.kind === 'trend') ?? false

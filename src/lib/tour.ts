@@ -53,16 +53,6 @@ export function startTour(navigate: (page: PageId) => void) {
           align: 'start',
         },
       },
-      {
-        element: '[data-tour="horizon"]',
-        popover: {
-          title: '📅 Horizonte de previsión',
-          description:
-            'Elige entre <b>3, 7 o 14 días</b>. La IA recalcula todas las propuestas al instante adaptándose a tu bloque logístico.',
-          side: 'bottom',
-          align: 'end',
-        },
-      },
 
       /* ── Pantalla Pedido ──────────────────────────────────────── */
       {

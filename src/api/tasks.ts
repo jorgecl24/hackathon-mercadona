@@ -1,5 +1,5 @@
 import { buildOrderTasks } from '@/mocks/tasks'
-import type { Horizon, OrderTask, OrderTasksResponse, TaskPatch } from '@/types'
+import type { OrderTask, OrderTasksResponse, TaskPatch } from '@/types'
 
 /*
  * Capa de datos simulada con la forma de los endpoints del backend FastAPI.
@@ -18,14 +18,14 @@ function nextCutoff(now = new Date()): Date {
 
 const db = new Map<string, OrderTask>()
 
-/** `GET /api/tasks?horizon=` */
-export async function getOrderTasks(horizon: Horizon): Promise<OrderTasksResponse> {
+/** `GET /api/tasks` */
+export async function getOrderTasks(): Promise<OrderTasksResponse> {
   await delay(600)
   db.clear()
-  const tasks = buildOrderTasks(horizon)
+  const tasks = buildOrderTasks(8)
   tasks.forEach((task) => db.set(task.id, task))
   return {
-    horizon,
+    horizon: 8,
     cutoffAt: nextCutoff().toISOString(),
     logisticsBlock: 'Frescos y secos',
     tasks,

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatNumber } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import type { Horizon, OrderTask, OrderTasksResponse } from '@/types'
+import type { OrderTask, OrderTasksResponse } from '@/types'
 
 /* ─── Risk helpers ───────────────────────────────────────────────── */
 
@@ -46,7 +46,7 @@ interface WasteItem {
   urgency: UrgencyLevel
 }
 
-function buildWasteItems(tasks: OrderTask[], horizon: Horizon): WasteItem[] {
+function buildWasteItems(tasks: OrderTask[]): WasteItem[] {
   const items: WasteItem[] = []
 
   for (const task of tasks) {
@@ -54,7 +54,7 @@ function buildWasteItems(tasks: OrderTask[], horizon: Horizon): WasteItem[] {
     if (!daysToExpiry) continue
 
     const stock = task.stock.store + task.stock.warehouse
-    const dailySellable = task.forecastSales / horizon
+    const dailySellable = task.forecastSales / 8
     const sellable = Math.round(dailySellable * daysToExpiry)
     const wasteUnits = Math.max(0, stock - sellable)
 
@@ -180,11 +180,10 @@ function WasteSkeleton() {
 /* ─── Page ───────────────────────────────────────────────────────── */
 
 interface WastePageProps {
-  horizon: Horizon
   onWasteCount?: (n: number) => void
 }
 
-export function WastePage({ horizon, onWasteCount }: WastePageProps) {
+export function WastePage({ onWasteCount }: WastePageProps) {
   const [data, setData] = useState<OrderTasksResponse | null>(null)
   const [loadError, setLoadError] = useState(false)
 
@@ -192,15 +191,15 @@ export function WastePage({ horizon, onWasteCount }: WastePageProps) {
     let cancelled = false
     setData(null)
     setLoadError(false)
-    getOrderTasks(horizon)
+    getOrderTasks()
       .then((r) => { if (!cancelled) setData(r) })
       .catch(() => { if (!cancelled) setLoadError(true) })
     return () => { cancelled = true }
-  }, [horizon])
+  }, [])
 
   const items = useMemo(
-    () => (data ? buildWasteItems(data.tasks, horizon) : []),
-    [data, horizon],
+    () => (data ? buildWasteItems(data.tasks) : []),
+    [data],
   )
 
   useEffect(() => { onWasteCount?.(items.length) }, [items.length, onWasteCount])
@@ -225,7 +224,7 @@ export function WastePage({ horizon, onWasteCount }: WastePageProps) {
         {items.length > 0 ? (
           <p className="mt-1 text-sm text-muted-foreground">
             {items.length} {items.length === 1 ? 'producto' : 'productos'} con riesgo de merma
-            en los próximos {horizon} días
+            en los próximos 8 días
           </p>
         ) : null}
       </div>
