@@ -1,0 +1,9 @@
+Intensidad_Lluvia,Temp_Max,Temp_Min,Importancia_Concierto,Importancia_Partido_Local,Importancia_Partido_TV,Importancia_Previa_Festivo,Importancia_Festivo,Intensidad_Operacion_Salida,Nivel_Turismo
+0,31,21,0,0,0,0,0,0,85
+0,33,22,0,0,0,0,0,0,85
+0,32,22,0,0,85,0,0,0,85
+65,24,18,0,0,0,0,0,0,80
+0,34,23,0,0,0,100,0,80,92
+0,35,24,0,95,0,0,100,0,98
+0,33,23,80,0,0,0,0,0,95
+0,30,20,0,0,0,0,0,0,85
