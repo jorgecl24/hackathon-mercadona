@@ -42,7 +42,7 @@ export function startTour(navigate: (page: PageId) => void) {
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
           const rect = popover.wrapper.getBoundingClientRect()
-          img.style.left = Math.max(0, rect.left - 30) + 'px'
+          img.style.left = Math.max(0, rect.left - 70) + 'px'
           img.style.top  = Math.max(0, rect.top  - 55) + 'px'
         })
       )
