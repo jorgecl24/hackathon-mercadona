@@ -36,7 +36,7 @@ export default function App() {
             today={today}
             horizon={horizon}
             onHorizonChange={setHorizon}
-            onStartTour={startTour}
+            onStartTour={() => startTour(setPage)}
           />
           <main className="flex-1">
             {page === 'order' ? (

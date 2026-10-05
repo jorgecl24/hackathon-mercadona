@@ -410,7 +410,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
       </div>
 
       {/* Chart */}
-      <div className="rounded-xl border p-6 shadow-xs">
+      <div className="rounded-xl border p-6 shadow-xs" data-tour="forecast-chart">
         <div className="mb-5 flex flex-wrap items-baseline gap-3">
           <span className="text-sm text-muted-foreground">Sugerido con señales activas</span>
           <span className="text-[28px] font-bold tabular-nums text-primary">
@@ -481,7 +481,7 @@ export function ForecastPage({ horizon }: { horizon: Horizon }) {
       {/* Bottom panels */}
       <div className={cn('grid gap-6', showDemo ? 'grid-cols-1 xl:grid-cols-2' : 'grid-cols-1 max-w-xl')}>
         {/* Señales de futuro */}
-        <div className="rounded-xl border p-6 shadow-xs">
+        <div className="rounded-xl border p-6 shadow-xs" data-tour="forecast-signals">
           <h2 className="mb-1 text-xl font-semibold">Señales de futuro</h2>
           <p className="mb-4 text-sm text-muted-foreground">
             Activa o desactiva señales para recalcular la previsión.

@@ -239,7 +239,7 @@ export function WastePage({ horizon, onWasteCount }: WastePageProps) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2" data-tour="waste-cards">
           {items.map((item) => (
             <WasteCard key={item.task.id} item={item} />
           ))}

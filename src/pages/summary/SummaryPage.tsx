@@ -195,7 +195,7 @@ export function SummaryPage({ horizon }: { horizon: Horizon }) {
       <h1 className="text-[28px] font-bold leading-tight">Resumen</h1>
 
       {/* KPIs — datos calculados a partir de la respuesta del backend */}
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4" data-tour="summary-kpis">
         <KpiCard
           label="Riesgo de rotura"
           value={roturaCount}
@@ -232,7 +232,7 @@ export function SummaryPage({ horizon }: { horizon: Horizon }) {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         {/* Heatmap por sección */}
-        <div className="rounded-xl border p-6 shadow-xs">
+        <div className="rounded-xl border p-6 shadow-xs" data-tour="summary-heatmap">
           <h2 className="mb-4 text-xl font-semibold">Estado por sección</h2>
           <div className="grid grid-cols-3 gap-3">
             {Array.from(bySection.entries()).map(([section, tasks]) => {
