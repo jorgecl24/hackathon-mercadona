@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tokens de la guia de diseno (seccion 9) */
+:root {
+  --background: #FFFFFF;
+  --foreground: #2B2B2B;
+  --muted: #F5F5F2;
+  --muted-foreground: #6B6B66;
+  --border: #E3E3DE;
+  --primary: #3F7D2B;            /* boton principal "Aceptar", enlaces */
+  --primary-foreground: #FFFFFF;
+  --brand: #609E42;              /* cabecera, acentos, iconos activos */
+  --warning: #FFA102;
+  --warning-soft: #FFF1D6;
+  --destructive: #D32F2F;        /* falta de stock, criticos */
+  --destructive-soft: #FDE7E7;
+  --success-soft: #E8F3E1;
+  --radius: 0.75rem;             /* 12 px */
+
+  /* Escala del mapa de calor (riesgo 3 dias) */
+  --heatmap-low: #CFE5C3;
+  --heatmap-mid: #FFD966;
+  --heatmap-high: #FFA102;
+  --heatmap-crit: #D32F2F;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  html,
+  body {
+    overscroll-behavior: none;
+  }
+
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Cifras clave con anchos tabulares (guia seccion 3). */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Safe-area insets (notch, barra de inicio en iOS, gestos Android). */
+@layer utilities {
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+  .pl-safe {
+    padding-left: max(env(safe-area-inset-left), 0px);
+  }
+  .pr-safe {
+    padding-right: max(env(safe-area-inset-right), 0px);
+  }
+  .px-safe {
+    padding-left: max(env(safe-area-inset-left), 0px);
+    padding-right: max(env(safe-area-inset-right), 0px);
+  }
+}
