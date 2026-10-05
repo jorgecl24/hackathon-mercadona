@@ -3,7 +3,7 @@ import 'driver.js/dist/driver.css'
 
 /* ─── Mascota — imagen real del logo ────────────────────────────── */
 
-const MERKI_HTML = `<img src="/mascot-ref.png" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:contain;"/>`
+const MERKI_HTML = `<img src="/mascot.png" alt="" aria-hidden="true" style="width:100%;height:100%;object-fit:contain;"/>`
 
 /* ─── Tour ───────────────────────────────────────────────────────── */
 

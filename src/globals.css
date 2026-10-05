@@ -224,13 +224,13 @@
 
 .tour-mascot-container {
   position: absolute !important;
-  bottom: -38px !important;
-  right: -30px !important;
-  width: 88px !important;
-  height: 114px !important;
+  bottom: -40px !important;
+  right: -36px !important;
+  width: 100px !important;
+  height: 100px !important;
   pointer-events: none !important;
   z-index: 99999 !important;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.2)) drop-shadow(0 2px 4px rgba(60, 122, 40, 0.25)) !important;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18)) !important;
 }
 
 .tour-mascot-container svg {
