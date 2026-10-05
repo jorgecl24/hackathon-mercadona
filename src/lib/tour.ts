@@ -22,14 +22,27 @@ export function startTour(navigate: (page: PageId) => void) {
     progressText: '{{current}} de {{total}}',
     overlayOpacity: 0.55,
     popoverClass: 'mercapredict-tour',
-    onDestroyed: () => navigate('order'),
+    onDestroyed: () => {
+      document.querySelector('.tour-mascot-corner')?.remove()
+      navigate('order')
+    },
     onPopoverRender: (popover) => {
+      // Remove any previous instance to avoid stacking across steps
+      document.querySelector('.tour-mascot-corner')?.remove()
+
       const img = document.createElement('img')
       img.src = '/mascot.png'
       img.alt = ''
       img.setAttribute('aria-hidden', 'true')
       img.className = 'tour-mascot-corner'
-      popover.wrapper.appendChild(img)
+      document.body.appendChild(img)
+
+      // Position relative to the rendered popover (fixed in viewport)
+      requestAnimationFrame(() => {
+        const rect = popover.wrapper.getBoundingClientRect()
+        img.style.left = Math.max(0, rect.left - 30) + 'px'
+        img.style.top  = Math.max(0, rect.top  - 55) + 'px'
+      })
     },
     steps: [
 

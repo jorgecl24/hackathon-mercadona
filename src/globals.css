@@ -102,14 +102,14 @@
 .driver-popover.mercapredict-tour .driver-popover-title {
   background: linear-gradient(135deg, #3F7D2B 0%, #609E42 100%) !important;
   color: #ffffff !important;
-  padding: 18px 44px 14px 88px !important;
+  padding: 18px 44px 14px 20px !important;
   border-radius: 14px 14px 0 0 !important;
   font-size: 15px !important;
   font-weight: 700 !important;
   line-height: 1.35 !important;
   margin: 0 !important;
   letter-spacing: -0.01em !important;
-  min-height: 58px !important;
+  min-height: 48px !important;
 }
 
 /* Close button — sobre el fondo verde */
@@ -224,15 +224,13 @@
 /* ─── Merki — mascota del tour ──────────────────────────────────── */
 
 .tour-mascot-corner {
-  position: absolute !important;
-  top: -55px !important;
-  left: -30px !important;
+  position: fixed !important;
   width: 110px !important;
   height: 110px !important;
   object-fit: contain !important;
   pointer-events: none !important;
-  z-index: 99999 !important;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.18)) !important;
+  z-index: 1000000001 !important;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22)) !important;
   animation: merki-float 3s ease-in-out infinite !important;
 }
 
