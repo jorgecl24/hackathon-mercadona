@@ -17,10 +17,15 @@ export function startTour() {
     overlayOpacity: 0.55,
     popoverClass: 'mercapredict-tour',
     onPopoverRender: (popover) => {
-      const container = document.createElement('div')
-      container.className = 'tour-mascot-container'
-      container.innerHTML = MERKI_HTML
-      popover.wrapper.appendChild(container)
+      const img = document.createElement('img')
+      img.src = '/mascot.png'
+      img.alt = ''
+      img.setAttribute('aria-hidden', 'true')
+      img.className = 'tour-mascot-inline'
+      popover.title.style.display = 'flex'
+      popover.title.style.alignItems = 'center'
+      popover.title.style.gap = '10px'
+      popover.title.insertBefore(img, popover.title.firstChild)
     },
     steps: [
       {
